@@ -1,0 +1,32 @@
+{
+  "name": "BasicEncoder",
+  "version":"0.1.0",
+  "keywords": "encoder, rotary, quadrature",
+  "description": "BasicEncoder counts pulses from simple rotary control knobs",
+  "license":"Apache",
+  "homepage":"encoder, rotary, quadrature",
+  "authors":
+  [
+    {
+      "name": "Peter Harrison",
+      "email": "",
+      "url": "https://micromouseonline.com",
+      "maintainer": true
+    }
+  ],
+  "repository":
+  {
+    "type": "git",
+    "url": "https://github.com/micromouseonline/BasicEncoder.git"
+  },
+  "dependencies": {
+    "": ""
+  },
+  "platforms":
+  [
+    "atmelavr"
+  ],
+  "frameworks": [
+    "arduino"
+  ]
+}
