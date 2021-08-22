@@ -1,6 +1,6 @@
 {
   "name": "BasicEncoder",
-  "version":"1.0.0",
+  "version":"1.0.1",
   "keywords": "encoder, rotary, quadrature",
   "description": "BasicEncoder counts pulses from simple rotary control knobs",
   "license":"Apache-2.0",
