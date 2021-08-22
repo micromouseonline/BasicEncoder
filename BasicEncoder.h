@@ -37,6 +37,10 @@ class BasicEncoder {
   }
   ~BasicEncoder() {}
 
+  void begin() {
+    reset();
+  }
+
   int8_t pin_state() {
     int8_t state_now = 0;
     if (digitalRead(m_pin_a) == m_pin_active) {
