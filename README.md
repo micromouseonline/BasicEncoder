@@ -88,7 +88,7 @@ To be sure that the encoder is polled frequently enough, it is probably best to 
       }      
     }
 
-In this example  the TimerOne library is used to generate an interrupt every 1000 microseconds (1kHz).  Changes are accumulated in the service routine and processed as needed by the main program loop.  This works well even on switches with a lot of bounce. The entire function is compact and could be faster with hard coded pin reads or by using digitalReadFast if you wanted to modify the library source code.
+In this example the TimerOne library is used to generate an interrupt every 1000 microseconds (1kHz).  Changes are accumulated in the service routine and processed as needed by the main program loop.  This works well even on switches with a lot of bounce. The entire function is compact and could be faster with hard coded pin reads or by using digitalReadFast if you wanted to modify the library source code.
 
 ## Reading changes
 
@@ -127,14 +127,7 @@ https://www.mikrocontroller.net/articles/Drehgeber
  https://playground.arduino.cc/Main/PinChangeInterrupt/
  https://thewanderingengineer.com/2014/08/11/arduino-pin-change-interrupts/
 
+## Multiple Encoders
 
+The library should work with multiple encoder instances. There is an example `two-encoders` that demonstrates this using a timer interrupt for polling. Pin-change interrupt implementations may also be fine if the encoders are in different groups though that has not yet been tested.
 
-## A note about the service method
-
-If you are inclide to examine the code to see how this all works, you might be upset by the way the service method is writte.
-
-You will see a static variable that retains the previous state of the input pins. Static variables, of course, retain their value from call to call because they are really stored in global memory space but are not visible to any code outside the function. These static variables can be initialised to any value. The initialisation is performed only the very first time the function is called. The compiler keeps an extra guard variable that allow it to detect that first use and perform the initialisation.
-
-Normally, you might expect to see this static variable definition and its initialisation at the start of a function. While not so common, this can be done anywhere that is convenient. Here, it is important that the previous state is set to be the same as the current state the first time the function is called to make sure that the encoder change is zero first time around.
-
-That is why the ```previous_state``` variable is not defined until _after_ the current pin state has been read.
