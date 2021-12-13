@@ -33,6 +33,7 @@ class BasicEncoder {
       : m_pin_a(pinA), m_pin_b(pinB), m_pin_active(active_state), m_steps_per_count(steps) {
     pinMode(pinA, INPUT_PULLUP);
     pinMode(pinB, INPUT_PULLUP);
+    m_previous_state - pin_state();
     m_change = 0;
   }
   ~BasicEncoder() {}
@@ -59,11 +60,10 @@ class BasicEncoder {
   void service() {
     int8_t state_now = pin_state();
     state_now ^= state_now >> 1;  // two bit gray-to-binary
-    static int8_t previous_state = state_now;
-    int8_t difference = previous_state - state_now;
+    int8_t difference = m_previous_state - state_now;
     // bit 1 has the direction, bit 0 is set if changeed
     if (difference & 1) {
-      previous_state = state_now;
+      m_previous_state = state_now;
       int delta = (difference & 2) - 1;
       if (m_reversed) {
         delta = -delta;
@@ -139,6 +139,7 @@ class BasicEncoder {
   uint8_t m_steps_per_count = 4;
   bool m_reversed = false;
   volatile int m_change = 0;
+  int8_t m_previous_state = 0;
   int m_steps = 0;
 };
 #endif  // BASIC_ENCODER_H_
