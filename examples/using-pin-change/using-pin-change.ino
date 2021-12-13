@@ -12,6 +12,13 @@
  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  See the License for the specific language governing permissions and
  limitations under the License.
+
+ This example creates a single encoder instance that is updated by
+ pin-change interrupts associated with the two pins. If a change is detected
+ in the main loop, the current count is sent to the serial port. 
+ 
+ Note that if you enable pin change interrupts for other pins in the same
+ group, you may cause conflicts.
  */
 
 #include <Arduino.h>

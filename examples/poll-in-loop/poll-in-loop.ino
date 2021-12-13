@@ -12,6 +12,15 @@
  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  See the License for the specific language governing permissions and
  limitations under the License.
+
+ This example creates a single encoder instance that is updated by
+ running the service method directly in the main program loop. This
+ must be called frequently enough to avoid missing any pin changes. That
+ means several hundred times a second in many cases. If a change is detected
+ in the main loop, the current count is sent to the serial port.
+ 
+ You can add a delay into the loop in this eample to see just how often you
+ need to call the service method and still get reliable counts.
  */
 
 #include <Arduino.h>
