@@ -115,7 +115,6 @@ If this is a problem in your application the article linked in the comments prov
 https://www.mikrocontroller.net/articles/Drehgeber
 
 
-
 ## Pin Change Interrupts
 
  If you like, this service routine could be called from the pin change interrupt.
