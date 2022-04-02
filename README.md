@@ -130,3 +130,8 @@ https://www.mikrocontroller.net/articles/Drehgeber
 
 The library should work with multiple encoder instances. There is an example `two-encoders` that demonstrates this using a timer interrupt for polling. Pin-change interrupt implementations may also be fine if the encoders are in different groups though that has not yet been tested.
 
+## A note about interrupts
+
+In a few places, the code needs to disable interrupts to ensure that data values are not corrupted. Immediately before a call to `noInterrupts()`, the current value of the status register, `SREG`, is saved into a local variable. Once the critical code section is complete, the saved state of the interrupt enable flag is restored by simply copying the saved value of the status register back. The other flags are not critical in this context. 
+
+This method is used rather than simply enabling interrupts because interrupts may already have been disabled at the time the function is called and to re-enable interrupts when they should not be enabled might cause hard to track bugs in the user code.

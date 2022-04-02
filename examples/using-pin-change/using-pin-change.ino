@@ -37,12 +37,12 @@ void pciSetup(byte pin)  // Setup pin change interupt on pin
 }
 
 void setup_encoders(int a, int b) {
-  uint8_t old_sreg = SREG;
+  uint8_t old_sreg = SREG;     // save the current interrupt enable flag
   noInterrupts();
   pciSetup(a);
   pciSetup(b);
   encoder.reset();
-  SREG = old_sreg;
+  SREG = old_sreg;    // restore the previous interrupt enable flag state
 }
 
 ISR(PCINT2_vect)  // pin change interrupt for D0 to D7

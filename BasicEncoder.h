@@ -38,9 +38,7 @@ class BasicEncoder {
   }
   ~BasicEncoder() {}
 
-  void begin() {
-    reset();
-  }
+  void begin() { reset(); }
 
   int8_t pin_state() {
     int8_t state_now = 0;
@@ -90,7 +88,7 @@ class BasicEncoder {
 
   // Read changes frequently enough that overflows cannot happen.
   int8_t get_change() {
-    uint8_t sreg = SREG;
+    uint8_t sreg = SREG;  // save the current interrupt enable flag
     noInterrupts();
     int8_t change = m_change;
     // the switch statement can make better code because only optimised
@@ -108,24 +106,24 @@ class BasicEncoder {
         m_change = 0;
         break;
     }
-    SREG = sreg;
+    SREG = sreg;  // restore the previous interrupt enable flag state
     return change;
   }
 
   int get_count() {
-    uint8_t sreg = SREG;
+    uint8_t sreg = SREG;  // save the current interrupt enable flag
     noInterrupts();
     int count = m_steps / m_steps_per_count;
-    SREG = sreg;
+    SREG = sreg;  // restore the previous interrupt enable flag state
     return count;
   }
 
   void reset() {
-    uint8_t sreg = SREG;
+    uint8_t sreg = SREG;  // save the current interrupt enable flag
     noInterrupts();
     m_steps = 0;
     m_change = 0;
-    SREG = sreg;
+    SREG = sreg;  // restore the previous interrupt enable flag state
   }
 
   void set_reverse() { m_reversed = true; }

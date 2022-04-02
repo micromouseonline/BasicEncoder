@@ -1,6 +1,6 @@
 {
       "name": "BasicEncoder",
-      "version": "1.1.1",
+      "version": "1.1.2",
       "description": "BasicEncoder counts pulses from one or more simple rotary encoder control knobs.",
       "keywords": "encoder, rotary encoder, quadrature",
       "repository":
