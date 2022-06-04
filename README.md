@@ -84,7 +84,7 @@ To be sure that the encoder is polled frequently enough, it is probably best to 
     void loop() {
       int encoder_change = encoder.get_change();
       if (encoder_change) {
-        Serial.println(encoder.get_change());
+        Serial.println(encoder_change);
       }      
     }
 
