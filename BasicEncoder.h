@@ -33,7 +33,7 @@ class BasicEncoder {
       : m_pin_a(pinA), m_pin_b(pinB), m_pin_active(active_state), m_steps_per_count(steps) {
     pinMode(pinA, INPUT_PULLUP);
     pinMode(pinB, INPUT_PULLUP);
-    m_previous_state - pin_state();
+    m_previous_state = pin_state();
     m_change = 0;
   }
   ~BasicEncoder() {}
