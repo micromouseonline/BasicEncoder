@@ -2,6 +2,8 @@
 
 A simple library class for reading encoders as used in control knobs.
 
+**This library is intended only for ATMega processors and has only been tested on the ATMega328**
+
 The complete code is in a single header file ```BasicEncoder.h``` so that you can just add the file to your project directly ratrher than instal a complete library.
 
 This class does not handle the pushbutton usually found on these rotary encoders. For that it is better to use a separate pushbutton library.
