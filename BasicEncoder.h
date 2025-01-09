@@ -88,8 +88,13 @@ class BasicEncoder {
 
   // Read changes frequently enough that overflows cannot happen.
   int8_t get_change() {
-    uint8_t sreg = SREG;  // save the current interrupt enable flag
-    noInterrupts();
+    #ifdef ARDUINO_ARCH_ESP32
+      portMUX_TYPE mux = portMUX_INITIALIZER_UNLOCKED;
+      portENTER_CRITICAL(&mux);
+    #else
+      uint8_t sreg = SREG; // save the current interrupt enable flag
+      noInterrupts();      // restore the previous interrupt enable flag state
+    #endif
     int8_t change = m_change;
     // the switch statement can make better code because only optimised
     // operations are used instead of generic division
@@ -106,24 +111,46 @@ class BasicEncoder {
         m_change = 0;
         break;
     }
-    SREG = sreg;  // restore the previous interrupt enable flag state
+    #ifdef ARDUINO_ARCH_ESP32
+      portEXIT_CRITICAL(&mux);
+    #else
+      SREG = sreg; // restore the previous interrupt enable flag state
+    #endif
     return change;
   }
 
   int get_count() {
-    uint8_t sreg = SREG;  // save the current interrupt enable flag
-    noInterrupts();
+    #ifdef ARDUINO_ARCH_ESP32
+      portMUX_TYPE mux = portMUX_INITIALIZER_UNLOCKED;
+      portENTER_CRITICAL(&mux);
+    #else
+      uint8_t sreg = SREG;
+      noInterrupts();
+    #endif
     int count = m_steps / m_steps_per_count;
-    SREG = sreg;  // restore the previous interrupt enable flag state
+    #ifdef ARDUINO_ARCH_ESP32
+      portEXIT_CRITICAL(&mux);
+    #else
+      SREG = sreg; // restore the previous interrupt enable flag state
+    #endif
     return count;
   }
 
   void reset() {
-    uint8_t sreg = SREG;  // save the current interrupt enable flag
-    noInterrupts();
+    #ifdef ARDUINO_ARCH_ESP32
+      portMUX_TYPE mux = portMUX_INITIALIZER_UNLOCKED;
+      portENTER_CRITICAL(&mux);
+    #else
+      uint8_t sreg = SREG;
+      noInterrupts();
+    #endif
     m_steps = 0;
     m_change = 0;
-    SREG = sreg;  // restore the previous interrupt enable flag state
+    #ifdef ARDUINO_ARCH_ESP32
+      portEXIT_CRITICAL(&mux);
+    #else
+      SREG = sreg; // restore the previous interrupt enable flag state
+    #endif
   }
 
   void set_reverse() { m_reversed = true; }
